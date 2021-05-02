@@ -11,7 +11,7 @@ class DBProvider {
         // `path` package is best practice to ensure the path is correctly
         // constructed for each platform.
         join(await getDatabasesPath(), 'checklist.db'),
-        // When the database is first created, create a table to store dogs.
+        // When the database is first created, create a tables.
         onCreate: (Database db, int version) async {
           return criarTabelas(db, version);
         },
@@ -22,6 +22,11 @@ class DBProvider {
 
   criarTabelas(Database db, int version) async {
     await db.execute(AppTabelas.usuario);
+    await db.execute(AppTabelas.agendamentoTipos);
+    await db.execute(AppTabelas.agendamentos);
+    await db.execute(AppTabelas.item);
+    await db.execute(AppTabelas.checklist);
+    await db.execute(AppTabelas.resposta);
   }
 }
 

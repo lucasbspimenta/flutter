@@ -25,14 +25,14 @@ extension RespostaValorExt on RespostaValor {
       }[this]!;
 }
 
-class ItemRepostaModel {
+class RespostaModel {
   final int id;
   final ItemModel item;
   final RespostaValor resposta;
   final String? foto;
   final ChecklistModel checklist;
 
-  ItemRepostaModel({
+  RespostaModel({
     required this.id,
     required this.item,
     required this.resposta,
@@ -50,8 +50,8 @@ class ItemRepostaModel {
     };
   }
 
-  factory ItemRepostaModel.fromMap(Map<String, dynamic> map) {
-    return ItemRepostaModel(
+  factory RespostaModel.fromMap(Map<String, dynamic> map) {
+    return RespostaModel(
       id: map['id'],
       item: ItemModel.fromMap(map['item']),
       resposta: map['resposta'].toString().respostaParse,
@@ -62,6 +62,6 @@ class ItemRepostaModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ItemRepostaModel.fromJson(String source) =>
-      ItemRepostaModel.fromMap(json.decode(source));
+  factory RespostaModel.fromJson(String source) =>
+      RespostaModel.fromMap(json.decode(source));
 }
