@@ -1,10 +1,12 @@
 import 'package:checklist/core/app_colors.dart';
 import 'package:checklist/core/core.dart';
+import 'package:checklist/models/usuario_model.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends PreferredSize {
+  final UsuarioModel usuario;
   @override
-  AppBarWidget()
+  AppBarWidget({required this.usuario})
       : super(
           preferredSize: Size.fromHeight(60),
           child: SafeArea(

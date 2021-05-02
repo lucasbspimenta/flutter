@@ -1,14 +1,11 @@
-import 'package:hive/hive.dart';
+import 'dart:convert';
+import 'package:floor/floor.dart';
 
-part 'usuario_model.g.dart';
-
-@HiveType(typeId: 0)
+@entity
 class UsuarioModel {
-  @HiveField(0)
-  final String nome;
-  @HiveField(1)
+  @primaryKey
   final String matricula;
-  @HiveField(2)
+  final String nome;
   final String? foto;
 
   UsuarioModel({
@@ -16,4 +13,25 @@ class UsuarioModel {
     required this.matricula,
     this.foto,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'nome': nome,
+      'matricula': matricula,
+      'foto': foto,
+    };
+  }
+
+  factory UsuarioModel.fromMap(Map<String, dynamic> map) {
+    return UsuarioModel(
+      nome: map['nome'],
+      matricula: map['matricula'],
+      foto: map['foto'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UsuarioModel.fromJson(String source) =>
+      UsuarioModel.fromMap(json.decode(source));
 }

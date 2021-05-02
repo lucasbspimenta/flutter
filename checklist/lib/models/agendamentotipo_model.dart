@@ -1,14 +1,10 @@
-import 'package:hive/hive.dart';
+import 'dart:convert';
+import 'package:floor/floor.dart';
 
-part 'agendamentotipo_model.g.dart';
-
-@HiveType(typeId: 3)
 class AgendamentoTipoModel {
-  @HiveField(0)
+  @primaryKey
   final int id;
-  @HiveField(1)
   final String nome;
-  @HiveField(2)
   final String cor;
 
   AgendamentoTipoModel({
@@ -16,4 +12,25 @@ class AgendamentoTipoModel {
     required this.nome,
     required this.cor,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': nome,
+      'cor': cor,
+    };
+  }
+
+  factory AgendamentoTipoModel.fromMap(Map<String, dynamic> map) {
+    return AgendamentoTipoModel(
+      id: map['id'],
+      nome: map['nome'],
+      cor: map['cor'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AgendamentoTipoModel.fromJson(String source) =>
+      AgendamentoTipoModel.fromMap(json.decode(source));
 }

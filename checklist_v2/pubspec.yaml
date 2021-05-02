@@ -1,0 +1,45 @@
+name: checklist
+description: Checklist - Lucas Pimenta (c096810)
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  google_fonts: ^2.0.0
+
+  dio:
+  sqflite:
+
+  path_provider: ^2.0.1
+  permission_handler: ^7.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  floor_generator: ^1.1.0
+  build_runner: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+
+  assets:
+     - assets/images/
+
+  fonts:
+    - family: Futura Book
+      fonts:
+        - asset: assets/fonts/futura_lt_book.ttf
+  
+    - family: Futura Bold
+      fonts:
+        - asset: assets/fonts/FuturaLT-Bold.ttf

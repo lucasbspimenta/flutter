@@ -1,18 +1,12 @@
-import 'package:hive/hive.dart';
-
+import 'dart:convert';
+import 'package:floor/floor.dart';
 import 'package:checklist/models/agendamento_model.dart';
 
-part 'checklist_model.g.dart';
-
-@HiveType(typeId: 5)
 class ChecklistModel {
-  @HiveField(0)
+  @primaryKey
   final int id;
-  @HiveField(1)
   final DateTime inicio;
-  @HiveField(2)
   final DateTime? conclusao;
-  @HiveField(3)
   final AgendamentoModel agendamento;
 
   ChecklistModel({
@@ -21,4 +15,27 @@ class ChecklistModel {
     this.conclusao,
     required this.agendamento,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'inicio': inicio.millisecondsSinceEpoch,
+      'conclusao': conclusao?.millisecondsSinceEpoch,
+      'agendamento': agendamento.toMap(),
+    };
+  }
+
+  factory ChecklistModel.fromMap(Map<String, dynamic> map) {
+    return ChecklistModel(
+      id: map['id'],
+      inicio: DateTime.fromMillisecondsSinceEpoch(map['inicio']),
+      conclusao: DateTime.fromMillisecondsSinceEpoch(map['conclusao']),
+      agendamento: AgendamentoModel.fromMap(map['agendamento']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ChecklistModel.fromJson(String source) =>
+      ChecklistModel.fromMap(json.decode(source));
 }

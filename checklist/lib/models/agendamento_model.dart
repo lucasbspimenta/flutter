@@ -1,22 +1,15 @@
-import 'package:hive/hive.dart';
-
+import 'dart:convert';
+import 'package:floor/floor.dart';
 import 'agendamentotipo_model.dart';
 
-part 'agendamento_model.g.dart';
-
-@HiveType(typeId: 4)
 class AgendamentoModel {
-  @HiveField(0)
+  @primaryKey
+  final int id;
   final DateTime data;
-  @HiveField(1)
   final String unidade;
-  @HiveField(2)
   final int unidadeId;
-  @HiveField(3)
   final bool concluido;
-  @HiveField(4)
   final DateTime? dataConclusao;
-  @HiveField(5)
   final AgendamentoTipoModel tipo;
 
   AgendamentoModel({
@@ -26,5 +19,35 @@ class AgendamentoModel {
     this.concluido = false,
     this.dataConclusao,
     required this.tipo,
+    required this.id,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data.millisecondsSinceEpoch,
+      'unidade': unidade,
+      'unidadeId': unidadeId,
+      'concluido': concluido,
+      'dataConclusao': dataConclusao?.millisecondsSinceEpoch,
+      'tipo': tipo.toMap(),
+      'id': id,
+    };
+  }
+
+  factory AgendamentoModel.fromMap(Map<String, dynamic> map) {
+    return AgendamentoModel(
+      data: DateTime.fromMillisecondsSinceEpoch(map['data']),
+      unidade: map['unidade'],
+      unidadeId: map['unidadeId'],
+      concluido: map['concluido'],
+      dataConclusao: DateTime.fromMillisecondsSinceEpoch(map['dataConclusao']),
+      tipo: AgendamentoTipoModel.fromMap(map['tipo']),
+      id: map['id'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AgendamentoModel.fromJson(String source) =>
+      AgendamentoModel.fromMap(json.decode(source));
 }

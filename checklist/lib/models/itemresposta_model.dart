@@ -1,33 +1,36 @@
-import 'package:hive/hive.dart';
-
+import 'dart:convert';
+import 'package:floor/floor.dart';
 import 'package:checklist/models/checklist_model.dart';
 import 'package:checklist/models/item_model.dart';
 
-part 'itemresposta_model.g.dart';
-
-@HiveType(typeId: 6)
 enum RespostaValor {
-  @HiveField(0)
   na,
-
-  @HiveField(1)
   conforme,
-
-  @HiveField(2)
   inconforme,
 }
 
-@HiveType(typeId: 7)
+extension RespostaValorStringExt on String {
+  RespostaValor get respostaParse => {
+        "na": RespostaValor.na,
+        "conforme": RespostaValor.conforme,
+        "inconforme": RespostaValor.inconforme,
+      }[this]!;
+}
+
+extension RespostaValorExt on RespostaValor {
+  String get parse => {
+        RespostaValor.na: "na",
+        RespostaValor.conforme: "conforme",
+        RespostaValor.inconforme: "inconforme",
+      }[this]!;
+}
+
 class ItemRepostaModel {
-  @HiveField(0)
+  @primaryKey
   final int id;
-  @HiveField(1)
   final ItemModel item;
-  @HiveField(2)
   final RespostaValor resposta;
-  @HiveField(3)
   final String? foto;
-  @HiveField(4)
   final ChecklistModel checklist;
 
   ItemRepostaModel({
@@ -37,4 +40,29 @@ class ItemRepostaModel {
     this.foto,
     required this.checklist,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'item': item.toMap(),
+      'resposta': resposta.parse,
+      'foto': foto,
+      'checklist': checklist.toMap(),
+    };
+  }
+
+  factory ItemRepostaModel.fromMap(Map<String, dynamic> map) {
+    return ItemRepostaModel(
+      id: map['id'],
+      item: ItemModel.fromMap(map['item']),
+      resposta: map['resposta'].toString().respostaParse,
+      foto: map['foto'],
+      checklist: ChecklistModel.fromMap(map['checklist']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ItemRepostaModel.fromJson(String source) =>
+      ItemRepostaModel.fromMap(json.decode(source));
 }

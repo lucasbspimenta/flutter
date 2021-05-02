@@ -1,18 +1,12 @@
-import 'package:hive/hive.dart';
+import 'dart:convert';
+import 'package:floor/floor.dart';
 
-part 'item_model.g.dart';
-
-@HiveType(typeId: 1)
 class ItemModel {
-  @HiveField(0)
+  @primaryKey
   final int id;
-  @HiveField(1)
   final String nome;
-  @HiveField(2)
   final String descricao;
-  @HiveField(3)
   final bool foto;
-  @HiveField(4)
   final ItemModel? itemPai;
 
   ItemModel({
@@ -22,4 +16,29 @@ class ItemModel {
     required this.foto,
     this.itemPai,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nome': nome,
+      'descricao': descricao,
+      'foto': foto,
+      'itemPai': itemPai?.toMap(),
+    };
+  }
+
+  factory ItemModel.fromMap(Map<String, dynamic> map) {
+    return ItemModel(
+      id: map['id'],
+      nome: map['nome'],
+      descricao: map['descricao'],
+      foto: map['foto'],
+      itemPai: ItemModel.fromMap(map['itemPai']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ItemModel.fromJson(String source) =>
+      ItemModel.fromMap(json.decode(source));
 }
