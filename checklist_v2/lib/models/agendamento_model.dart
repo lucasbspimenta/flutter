@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:checklist/dao/agendamentotipo_dao.dart';
+
 import 'agendamentotipo_model.dart';
 
 class AgendamentoModel {
@@ -8,7 +10,7 @@ class AgendamentoModel {
   final int unidadeId;
   final bool concluido;
   final DateTime? dataConclusao;
-  final AgendamentoTipoModel tipo;
+  final Future<AgendamentoTipoModel> tipo;
 
   AgendamentoModel({
     required this.data,
@@ -38,8 +40,11 @@ class AgendamentoModel {
       unidade: map['unidade'],
       unidadeId: map['unidadeId'],
       concluido: map['concluido'],
-      dataConclusao: DateTime.fromMillisecondsSinceEpoch(map['dataConclusao']),
-      tipo: AgendamentoTipoModel.fromMap(map['tipo']),
+      dataConclusao: (map['dataConclusao'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['dataConclusao'])
+          : null),
+      tipo: AgendamentoTipoDao()
+          .find(map['tipo']), //AgendamentoTipoModel.fromMap(map['tipo']),
       id: map['id'],
     );
   }

@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {});
     });
 
-    controller.verificaConexao();
+    controller.carregaDados();
   }
 
   @override

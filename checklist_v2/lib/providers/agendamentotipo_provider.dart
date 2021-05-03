@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:checklist/core/app_config.dart';
 import 'package:checklist/dao/agendamentotipo_dao.dart';
 import 'package:checklist/models/agendamentotipo_model.dart';

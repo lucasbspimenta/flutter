@@ -16,29 +16,29 @@
     "agendamentos" : 
     [
         {
-            "data" : "2021-07-23 00:00:00",
+            "data" : 1627009200000,
             "unidade" : "Ag. Divinópolis",
             "unidadeId" : 113,
             "concluido": false,
-            "dataConclusao": "",
+            "dataConclusao": null,
             "tipo" : 1,
             "id": 1
         },
         {
-            "data" : "2021-07-30 00:00:00",
+            "data" : 1627700400000,
             "unidade" : "Ag. Itaúna",
             "unidadeId" : 124,
             "concluido": false,
-            "dataConclusao": "",
+            "dataConclusao": null,
             "tipo" : 2,
             "id": 2
         },
         {
-            "data" : "2021-03-23 00:00:00",
+            "data" :1627009200000,
             "unidade" : "Ag. Divinópolis",
             "unidadeId" : 113,
             "concluido": true,
-            "dataConclusao": "2021-03-23 00:00:00",
+            "dataConclusao": "1627009200000",
             "tipo" : 1,
             "id": 3
         }

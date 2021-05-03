@@ -26,4 +26,15 @@ class AgendamentoTipoDao {
 
     return list;
   }
+
+  Future<AgendamentoTipoModel?> find(int id) async {
+    final db = await DBProvider().database;
+    final res =
+        await db.query("AgendamentoTipo", where: 'id = ?', whereArgs: [id]);
+
+    if (res.length > 0) {
+      return AgendamentoTipoModel.fromMap(res.first);
+    }
+    return null;
+  }
 }

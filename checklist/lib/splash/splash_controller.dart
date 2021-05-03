@@ -22,18 +22,12 @@ class SplashController {
       mensagensCarregandoNotifier.value = mensagensCarregando;
   String get mensagensCarregando => mensagensCarregandoNotifier.value;
 
-  AppDatabase? database;
-  UsuarioModel? usuario;
-  List<AgendamentoTipoModel>? agendamentoTipos;
-
   final repository = AppRepository();
 
   void getUsuario(response) async {
-    state = SplashState.loading;
     mensagensCarregando = 'Carregando Usuário';
     usuario = await repository.getUsuario(response);
     mensagensCarregando = 'Carregando Usuário: Concluído';
-    state = SplashState.success;
   }
 
   void getAgendamentoTipos(response) async {
@@ -61,21 +55,7 @@ class SplashController {
     this.getAgendamentoTipos(jsonEncode(json['agendamento_tipos']));
   }
 
-  void getDatabaseRemota() async {
-    state = SplashState.loading;
-    mensagensCarregando = 'Carregando database remota';
-
-    final response = await http.get(AppConfig.urlDatabase);
-
-    if (response.statusCode == 200) {
-      state = SplashState.success;
-      mensagensCarregando = 'Verificando database: Concluído';
-      this.carregaDadosRemotos(jsonDecode(response.body));
-    } else {
-      mensagensCarregando = 'Falha ao carregar database remota';
-      throw Exception('Falha ao carregar database remota');
-    }
-  }
+  
 
   Future<bool> getDatabase() async {
     repository.iniciarBaseLocal();
